@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.Desktop;
 import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 
 public class Main {
