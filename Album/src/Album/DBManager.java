@@ -23,7 +23,7 @@ public class DBManager {
     public void createTable(Connection connection, String table_name){
         Statement statement;
         try {
-            String query = "create Table " + table_name + "(employID SERIAL, name varchar(200), adress varchar(200), primary key(employID));";
+            String query = "create Table " + table_name + "(employID SERIAL, name varchar(200), address varchar(200), primary key(employID));";
             statement = connection.createStatement();
             statement.executeUpdate(query);
             System.out.println("Table Created");
@@ -31,10 +31,10 @@ public class DBManager {
             System.out.println(e);
         }
     }
-    public void insert_photo(Connection connection, String tableName, String name, String adress){
+    public void insertPhoto(Connection connection, String table_name, String name, String address){
         Statement statement;
         try {
-            String query = String.format("insert into %s(name, adress) values('%s', '%s');", tableName, name, adress);
+            String query = String.format("insert into %s(name, address) values('%s', '%s');", table_name, name, address);
             System.out.println("Inserted");
         } catch (Exception e) {
             System.out.println(e);
