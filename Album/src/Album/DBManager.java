@@ -1,5 +1,6 @@
 package Album;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,9 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.util.Objects;
 
 
 public class DBManager {
+    public BufferedImage photo;
     public List<Categories> Category = new ArrayList<>();
     public Connection connectionToDB(String dbname, String user, String pwrd) {
         Connection connection = null;
@@ -140,6 +144,13 @@ public class DBManager {
             System.out.println("Table Deleted");
         } catch (Exception e) {
             System.out.println(e);
+        }
+    }
+    public void loadImage (String path){
+        try {
+            photo = ImageIO.read(DBManager.class.getResource(path));
+        }catch (IOException e){
+            e.printStackTrace();
         }
     }
 }
