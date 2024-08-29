@@ -35,7 +35,7 @@ public class DBManager {
     public void createTable(Connection connection, String table_name){
         Statement statement;
         try {
-            String query = "create Table " + table_name + "(ID SERIAL, category varchar(200), address varchar(200), primary key(ID));";
+            String query = "create Table " + table_name + "(ID SERIAL, category varchar(200), data varchar(200), primary key(ID));";
             statement = connection.createStatement();
             statement.executeUpdate(query);
             System.out.println("Table Created");
@@ -43,11 +43,11 @@ public class DBManager {
             System.out.println(e);
         }
     }
-    public void insertRow(Connection connection, String table_name, String category, String address){
+    public void insertRow(Connection connection, String table_name, String category, String data){
         Statement statement;
         try {
             //Fazer teste se existem 5 fotos dessa categoria
-            String query = String.format("insert into %s(category, address) values('%s', '%s');", table_name, category, address);
+            String query = String.format("insert into %s(category, data) values('%s', '%s');", table_name, category, data);
             statement = connection.createStatement();
             statement.executeUpdate(query);
             //loadImage.OpenFileViaExplorer();
@@ -68,7 +68,7 @@ public class DBManager {
             while (rs.next()){
                 System.out.print(rs.getString("ID")+" ");
                 System.out.print(rs.getString("category")+" ");
-                System.out.println(rs.getString("Address")+" ");
+                System.out.println(rs.getString("data")+" ");
             }
         } catch (Exception e) {
             System.out.println(e);
