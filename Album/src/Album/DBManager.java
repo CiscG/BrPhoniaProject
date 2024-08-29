@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DBManager {
+    public List<Categories> Category = new ArrayList<>();
     public Connection connectionToDB(String dbname, String user, String pwrd) {
         Connection connection = null;
         try{
