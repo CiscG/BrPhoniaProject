@@ -23,7 +23,7 @@ public class ShowPhoto extends JPanel {
         super.paintComponent(graphics);
         graphics.drawImage(image, 0, 0, 600, 400, this);
     }
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -35,9 +35,9 @@ public class ShowPhoto extends JPanel {
                 /*
                 Set timer for change photos
                 updateUI();
-                */
+
 
             }
         });
-    }
+    }*/
 }

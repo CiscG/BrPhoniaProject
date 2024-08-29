@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import java.io.IOException;
-import java.util.Objects;
+//import java.io.IOException;
+//import java.util.Objects;
 
 
 public class DBManager {
@@ -50,7 +50,9 @@ public class DBManager {
             String query = String.format("insert into %s(category, address) values('%s', '%s');", table_name, category, address);
             statement = connection.createStatement();
             statement.executeUpdate(query);
-            System.out.println(loadImage.);
+            //loadImage.OpenFileViaExplorer();
+            photo = loadImage.loadImage(LoadImage.OpenFileViaExplorer());
+            //System.out.println(loadImage.OpenFileViaExplorer());
             System.out.println("Inserted");
         } catch (Exception e) {
             System.out.println(e);
@@ -70,7 +72,7 @@ public class DBManager {
             }
         } catch (Exception e) {
             System.out.println(e);
-            this.createTable(connection, "test");
+            this.createTable(connection, table_name);
         }
     }
     public void updateCategory(Connection connection, String table_name, String old_category, String new_category){

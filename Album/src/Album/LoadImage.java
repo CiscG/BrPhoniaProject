@@ -10,7 +10,7 @@ import java.io.File;
 
 public class LoadImage {
     BufferedImage photo;
-    public static boolean OpenFileViaExplorer(){
+    public static File OpenFileViaExplorer(){
         try{
             JFileChooser fileChooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Image files", "png","jpg");
@@ -24,25 +24,25 @@ public class LoadImage {
 
                 if(!Desktop.isDesktopSupported()){
                     System.out.println("Not Supported");
-                    return false;
+                    return null;
                 }else{
                     Desktop desktop = Desktop.getDesktop();
                     desktop.open(selectedFile);
-                    return true;
+                    return selectedFile;
                 }
             }else if (result == JFileChooser.CANCEL_OPTION){
                 System.out.println("Canceled");
-                return false;
+                return null;
             }
 
         } catch (Exception e) {
             System.out.println(e);
-            return false;
+            return null;
         }
-        return false;
+        return null;
     }
-    public BufferedImage loadImage(String path){
-        File pathPhoto = new File(path);
+    public BufferedImage loadImage(File file){
+        File pathPhoto = file;
         try {
             photo = ImageIO.read(pathPhoto);
         }catch (Exception e){
