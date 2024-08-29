@@ -104,8 +104,7 @@ public class DBManager {
             System.out.println(e);
         }
     }
-    public void deleteRowByName(Connection connection, String table_name, String name)
-    {
+    public void deleteRowByName(Connection connection, String table_name, String name) {
         Statement statement;
         try{
             String query = String.format("delete from %s where name = '%s'", table_name, name);
@@ -116,8 +115,7 @@ public class DBManager {
             System.out.println(e);
         }
     }
-    public void deleteRowByID(Connection connection, String table_name, int id)
-    {
+    public void deleteRowByID(Connection connection, String table_name, int id) {
         Statement statement;
         try{
             String query = String.format("delete from %s where employID = '%s'", table_name, id);
@@ -128,7 +126,15 @@ public class DBManager {
             System.out.println(e);
         }
     }
-    public void deleteTable(){
-
+    public void deleteTable(Connection connection, String table_name){
+        Statement statement;
+        try {
+            String query = String.format("drop table %s", table_name);
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+            System.out.println("Table Deleted");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }
