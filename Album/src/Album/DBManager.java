@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 
 public class DBManager {
