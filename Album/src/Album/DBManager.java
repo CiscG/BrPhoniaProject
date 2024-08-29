@@ -58,7 +58,7 @@ public class DBManager {
             }
         } catch (Exception e) {
             System.out.println(e);
-            //createTable(connection, "test");
+            this.createTable(connection, "test");
         }
     }
     public void updateName(Connection connection, String table_name, String old_name, String new_name){
