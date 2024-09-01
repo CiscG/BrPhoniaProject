@@ -3,8 +3,7 @@ package Album;
 import java.awt.image.BufferedImage;
 
 public class Categories{
-    int id;
-    String category;
-    BufferedImage photo;
-    String data;
+    public int id;
+    public String category;
+    public BufferedImage photo;
 }

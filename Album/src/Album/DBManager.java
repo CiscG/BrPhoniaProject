@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 public class DBManager {
     public BufferedImage photo;
     LoadImage loadImage = new LoadImage();
-    public List<Categories> Category = new ArrayList<>();
+    public List<Categories> category = new ArrayList<>();
     public Connection connectionToDB(String dbname, String user, String pwrd) {
         Connection connection = null;
         try{
@@ -35,7 +35,7 @@ public class DBManager {
     public void createTable(Connection connection, String table_name){
         Statement statement;
         try {
-            String query = "create Table " + table_name + "(ID SERIAL, category varchar(200), data varchar(200), primary key(ID));";
+            String query = "create Table " + table_name + "(ID SERIAL, category varchar(200),filedata bytea(), primary key(ID));";
             statement = connection.createStatement();
             statement.executeUpdate(query);
             System.out.println("Table Created");
@@ -43,11 +43,11 @@ public class DBManager {
             System.out.println(e);
         }
     }
-    public void insertRow(Connection connection, String table_name, String category, String data){
+    public void insertRow(Connection connection, String table_name, String category){
         Statement statement;
         try {
             //Fazer teste se existem 5 fotos dessa categoria
-            String query = String.format("insert into %s(category, data) values('%s', '%s');", table_name, category, data);
+            String query = String.format("insert into %s(category) values('%s');", table_name, category);
             statement = connection.createStatement();
             statement.executeUpdate(query);
             //loadImage.OpenFileViaExplorer();
@@ -86,17 +86,19 @@ public class DBManager {
             System.out.println(e);
         }
     }
-    public void searchByCategory(Connection connection, String table_name, String category){
+    public void searchByCategory(Connection connection, String table_name, String nameCategory){
+        Categories categories = new Categories();
         Statement statement;
         ResultSet rs;
+        this.category = new ArrayList<>();
         try {
-            String query  = String.format("select * from %s where category = '%s'", table_name, category);
+            String query  = String.format("select * from %s where category = '%s'", table_name, nameCategory);
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
             while (rs.next()){
-                System.out.print(rs.getString("ID"));
-                System.out.print(rs.getString("category"));
-                System.out.println(rs.getString("Address"));
+                categories.id = rs.getInt("ID");
+                categories.category = rs.getString("category");
+                //categories.photo = rs.getObject();
             }
         } catch (Exception e) {
             System.out.println(e);
