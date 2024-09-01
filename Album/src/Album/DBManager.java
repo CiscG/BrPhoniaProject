@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 public class DBManager {
     public BufferedImage photo;
     public int categoryTam;
+    boolean status = true;
     LoadImage loadImage = new LoadImage();
     public List<Categories> category = new ArrayList<Categories>();
     public Connection connectionToDB(String dbname, String user, String pwrd) {
@@ -46,6 +47,7 @@ public class DBManager {
         try {
             //Fazer teste se existem 5 fotos dessa categoria
             if (categoryTam < 5) {
+                loadImage.loadImage(loadImage.OpenFileViaExplorer());
                 String query = String.format("insert into %s(category, filedata) values('%s', '%s');", table_name, category);
                 statement = connection.createStatement();
                 statement.executeUpdate(query);
