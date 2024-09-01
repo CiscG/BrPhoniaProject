@@ -6,9 +6,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
+import java.io.IOException;
+import java.nio.file.Files;
 
 public class LoadImage {
+    byte[] imageBytes;
     BufferedImage photo;
     public static File OpenFileViaExplorer(){
         try{
@@ -43,6 +45,11 @@ public class LoadImage {
     }
     public BufferedImage loadImage(File file){
         File pathPhoto = file;
+        try {
+            imageBytes = Files.readAllBytes(file.toPath());
+        } catch (IOException e) {
+            System.out.println(e);
+        }
         try {
             photo = ImageIO.read(pathPhoto);
         }catch (Exception e){

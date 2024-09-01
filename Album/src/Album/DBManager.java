@@ -1,10 +1,7 @@
 package Album;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.io.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.image.BufferedImage;
@@ -15,8 +12,9 @@ import javax.imageio.ImageIO;
 
 public class DBManager {
     public BufferedImage photo;
+    public int categoryTam;
     LoadImage loadImage = new LoadImage();
-    public List<Categories> category = new ArrayList<>();
+    public List<Categories> category = new ArrayList<Categories>();
     public Connection connectionToDB(String dbname, String user, String pwrd) {
         Connection connection = null;
         try{
@@ -47,13 +45,18 @@ public class DBManager {
         Statement statement;
         try {
             //Fazer teste se existem 5 fotos dessa categoria
-            String query = String.format("insert into %s(category) values('%s');", table_name, category);
-            statement = connection.createStatement();
-            statement.executeUpdate(query);
-            //loadImage.OpenFileViaExplorer();
-            photo = loadImage.loadImage(LoadImage.OpenFileViaExplorer());
-            //System.out.println(loadImage.OpenFileViaExplorer());
-            System.out.println("Inserted");
+            if (categoryTam < 5) {
+                String query = String.format("insert into %s(category, filedata) values('%s', '%s');", table_name, category);
+                statement = connection.createStatement();
+                statement.executeUpdate(query);
+                //loadImage.OpenFileViaExplorer();
+                photo = loadImage.loadImage(LoadImage.OpenFileViaExplorer());
+                //System.out.println(loadImage.OpenFileViaExplorer());
+                System.out.println("Inserted");
+            }else{
+                System.out.println("Categoria cheia");
+            }
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -87,19 +90,21 @@ public class DBManager {
         }
     }
     public void searchByCategory(Connection connection, String table_name, String nameCategory){
-        Categories categories = new Categories();
+        Categories cat = new Categories();
         Statement statement;
         ResultSet rs;
-        this.category = new ArrayList<>();
+        this.category = new ArrayList<Categories>();
         try {
             String query  = String.format("select * from %s where category = '%s'", table_name, nameCategory);
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
             while (rs.next()){
-                categories.id = rs.getInt("ID");
-                categories.category = rs.getString("category");
-                //categories.photo = rs.getObject();
+                cat.id = rs.getInt("ID");
+                cat.category = rs.getString("category");
+                cat.photo = ImageIO.read(new ByteArrayInputStream(loadImage.imageBytes));
+                category.add(cat);
             }
+            categoryTam = category.size();
         } catch (Exception e) {
             System.out.println(e);
         }
