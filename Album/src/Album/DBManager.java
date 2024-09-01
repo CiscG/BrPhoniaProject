@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.image.BufferedImage;
+import java.util.Scanner;
 import javax.imageio.ImageIO;
 //import java.io.IOException;
 //import java.util.Objects;
@@ -13,6 +14,7 @@ import javax.imageio.ImageIO;
 public class DBManager {
     public BufferedImage photo;
     public int categoryTam;
+    Scanner scanner = new Scanner(System.in);
     boolean status = true;
     LoadImage loadImage = new LoadImage();
     public List<Categories> category = new ArrayList<Categories>();
@@ -55,6 +57,7 @@ public class DBManager {
                 photo = loadImage.loadImage(LoadImage.OpenFileViaExplorer());
                 //System.out.println(loadImage.OpenFileViaExplorer());
                 System.out.println("Inserted");
+                categoryTam++;
             }else{
                 System.out.println("Categoria cheia");
             }
@@ -101,14 +104,33 @@ public class DBManager {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
             while (rs.next()){
+                cat = new Categories();
                 cat.id = rs.getInt("ID");
                 cat.category = rs.getString("category");
-                cat.photo = ImageIO.read(new ByteArrayInputStream(loadImage.imageBytes));
+                cat.photo = ImageIO.read(new ByteArrayInputStream(rs.getBytes("filedata")));
                 category.add(cat);
             }
             categoryTam = category.size();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Categoria não encontrada \nDeseja continuar? \n1 - Sim \n2 - Não");
+            int test = Integer.parseInt(scanner.nextLine());
+            if(test != 1)
+            {
+                status = false;
+            }
+        }
+    }
+    public boolean searchByCategory2(Connection connection, String table_name, String nameCategory){
+        Statement statement;
+        ResultSet rs;
+        this.category = new ArrayList<Categories>();
+        try {
+            String query  = String.format("select * from %s where category = '%s'", table_name, nameCategory);
+            statement = connection.createStatement();
+            rs = statement.executeQuery(query);
+            return false;
+        } catch (Exception e) {
+            return true;
         }
     }
     public void searchByID(Connection connection, String table_name, int id){
