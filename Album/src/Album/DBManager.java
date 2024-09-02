@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 public class DBManager {
     public BufferedImage photo;
     public int categoryTam;
+    public String categoryName;
     Scanner scanner = new Scanner(System.in);
     boolean status = true;
     LoadImage loadImage = new LoadImage();
@@ -98,6 +99,7 @@ public class DBManager {
         Categories cat = new Categories();
         Statement statement;
         ResultSet rs;
+        this.categoryName = nameCategory;
         this.category = new ArrayList<Categories>();
         try {
             String query  = String.format("select * from %s where category = '%s'", table_name, nameCategory);
@@ -127,6 +129,7 @@ public class DBManager {
     public boolean searchByCategory2(Connection connection, String table_name, String nameCategory){
         Statement statement;
         ResultSet rs;
+        this.categoryName = nameCategory;
         this.category = new ArrayList<Categories>();
         try {
             String query  = String.format("select * from %s where category = '%s'", table_name, nameCategory);
@@ -168,7 +171,7 @@ public class DBManager {
     public void deleteRowByImage(Connection connection, String table_name, String image) {
         Statement statement;
         try{
-            String query = String.format("delete from %s where address = '%s'", table_name, image);
+            String query = String.format("delete from %s where id = '%s'", table_name, image);
             statement = connection.createStatement();
             statement.executeUpdate(query);
             System.out.println("Data Deleted");

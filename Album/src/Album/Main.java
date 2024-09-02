@@ -27,8 +27,8 @@ public class Main {
         test = scanner.nextLine();
         if(Objects.equals(test, "criar"))
         {
+            category = new Categories();
             while(status) {
-                category = new Categories();
                 System.out.println("Digite o nome de sua categoria");
                 category.category = scanner.nextLine();
                 if(db.searchByCategory2(connection, nameUser, category.category)){
@@ -39,8 +39,11 @@ public class Main {
                 }
             }
         }else {
-            while(status) {
-                System.out.println("Escolha a categoria que você deseja visitar");
+            System.out.println("Escolha a categoria que você deseja visitar");
+            nameCategory = scanner.nextLine();
+            status = db.searchByCategory(connection, nameUser, nameCategory);
+            while (status) {
+                System.out.println("Escolha  novamente a categoria que você deseja visitar");
                 nameCategory = scanner.nextLine();
                 status = db.searchByCategory(connection, nameUser, nameCategory);
             }
@@ -50,11 +53,26 @@ public class Main {
             System.out.println("Escolha a opção que deseja realizar \n1 - Adicionar foto \n2 - Remover foto" +
                     "\n3 - Remover album \n4 - Slides de fotos \n5 - Sair do programa");
             test = scanner.nextLine();
-
-
-            status = false;
+            switch (test){
+                case "1":
+                    db.insertRow(connection, nameUser, db.categoryName);
+                    break;
+                case "2":
+                    System.out.println("selecione a foto que você deseja deletar:");
+                    test = scanner.nextLine();
+                    db.deleteRowByImage(connection, nameUser, test);
+                    break;
+                case "3":
+                    db.deleteRowByCategory(connection, nameUser, db.categoryName);
+                    break;
+                case "4":
+                    //chamar slide de fotos
+                    break;
+                case "5":
+                    status = false;
+                    break;
+            }
         }
-
     }
 
 }
