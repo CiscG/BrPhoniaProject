@@ -117,10 +117,10 @@ public class DBManager {
             int test = Integer.parseInt(scanner.nextLine());
             if(test != 1)
             {
-                return false;
+                return true;
             }
             else{
-                return true;
+                return false;
             }
         }
     }
