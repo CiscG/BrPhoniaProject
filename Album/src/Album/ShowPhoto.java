@@ -9,6 +9,7 @@ import java.util.Timer;
 
 public class ShowPhoto extends JPanel {
     BufferedImage photo;
+    JLabel label = new JLabel();
     Timer timer = new Timer();
     int counter = 5;
     List<Categories> categories;
@@ -22,8 +23,9 @@ public class ShowPhoto extends JPanel {
                 } else {
                     System.out.println("Next photo");
                     ImageIcon icon = new ImageIcon(list.next().photo);
-                    Image image = icon.getImage().getScaledInstance(600, 400, Image.SCALE_SMOOTH);
-                    //label.setIcon(new ImageIcon(image));
+                    label.setSize(600, 400);
+                    Image image = icon.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
+                    label.setIcon(new ImageIcon(image));
                     updateImage();
                     timer.cancel();
                 }
