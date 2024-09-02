@@ -94,7 +94,7 @@ public class DBManager {
             System.out.println(e);
         }
     }
-    public void searchByCategory(Connection connection, String table_name, String nameCategory){
+    public boolean searchByCategory(Connection connection, String table_name, String nameCategory){
         Categories cat = new Categories();
         Statement statement;
         ResultSet rs;
@@ -111,12 +111,16 @@ public class DBManager {
                 category.add(cat);
             }
             categoryTam = category.size();
+            return false;
         } catch (Exception e) {
             System.out.println("Categoria não encontrada \nDeseja continuar? \n1 - Sim \n2 - Não");
             int test = Integer.parseInt(scanner.nextLine());
             if(test != 1)
             {
-                status = false;
+                return false;
+            }
+            else{
+                return true;
             }
         }
     }
@@ -128,6 +132,7 @@ public class DBManager {
             String query  = String.format("select * from %s where category = '%s'", table_name, nameCategory);
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
+            System.out.println("Categoria já existente");
             return false;
         } catch (Exception e) {
             return true;
