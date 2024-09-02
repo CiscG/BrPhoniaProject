@@ -23,15 +23,20 @@ public class LoadImage {
             if(result == JFileChooser.APPROVE_OPTION){
                 File selectedFile = new File(fileChooser.getSelectedFile().getAbsolutePath());
                 System.out.println("Filepath" + selectedFile);
-
-                if(!Desktop.isDesktopSupported()){
-                    System.out.println("Not Supported");
-                    return null;
-                }else{
-                    Desktop desktop = Desktop.getDesktop();
-                    desktop.open(selectedFile);
-                    return selectedFile;
+                if(selectedFile.length()/1048576 <= 300){
+                    if(!Desktop.isDesktopSupported()){
+                        System.out.println("Not Supported");
+                        return null;
+                    }else{
+                        Desktop desktop = Desktop.getDesktop();
+                        desktop.open(selectedFile);
+                        return selectedFile;
+                    }
                 }
+                else{
+                    return null;
+                }
+
             }else if (result == JFileChooser.CANCEL_OPTION){
                 System.out.println("Canceled");
                 return null;
