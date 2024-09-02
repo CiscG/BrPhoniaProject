@@ -34,6 +34,7 @@ public class LoadImage {
                     }
                 }
                 else{
+                    System.out.println("Arquivo grande demais");
                     return null;
                 }
 
@@ -54,11 +55,13 @@ public class LoadImage {
             imageBytes = Files.readAllBytes(file.toPath());
         } catch (IOException e) {
             System.out.println(e);
+            photo = null;
         }
         try {
             photo = ImageIO.read(pathPhoto);
         }catch (Exception e){
-            e.printStackTrace();
+            System.out.println(e);
+            photo = null;
         }
         return photo;
     }

@@ -1,9 +1,7 @@
 package Album;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 import java.awt.image.BufferedImage;
 import java.sql.Connection;
 
@@ -16,6 +14,7 @@ public class Main {
         DBManager db = new DBManager();
         BufferedImage photo;
         boolean status = true;
+        ShowPhoto showPhoto = new ShowPhoto();
         System.out.println("Insira o seu nome de usuario");
         //Input de usuario para verificação se existem arquivos desse usario, que caso negativo cria espaço no banco para esse usuario
         nameUser = scanner.nextLine();
@@ -51,7 +50,7 @@ public class Main {
         status = true;
         while(status){
             System.out.println("Escolha a opção que deseja realizar \n1 - Adicionar foto \n2 - Remover foto" +
-                    "\n3 - Remover album \n4 - Slides de fotos \n5 - Sair do programa");
+                    "\n3 - Remover album \n4 - Slides de fotos \n5 - Ordenar Album \n6 - Sair do programa");
             test = scanner.nextLine();
             switch (test){
                 case "1":
@@ -66,9 +65,12 @@ public class Main {
                     db.deleteRowByCategory(connection, nameUser, db.categoryName);
                     break;
                 case "4":
-                    //chamar slide de fotos
+                    showPhoto.loadImage(db.category);
                     break;
                 case "5":
+                    Collections.sort(db.category, Comparator.comparing(Categories::getId));
+                    break;
+                case "6":
                     status = false;
                     break;
             }
