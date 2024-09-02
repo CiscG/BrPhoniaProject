@@ -44,9 +44,16 @@ public class Main {
                 nameCategory = scanner.nextLine();
                 status = db.searchByCategory(connection, nameUser, nameCategory);
             }
-
         }
+        status = true;
+        while(status){
+            System.out.println("Escolha a opção que deseja realizar \n1 - Adicionar foto \n2 - Remover foto" +
+                    "\n3 - Remover album \n4 - Slides de fotos \n5 - Sair do programa");
+            test = scanner.nextLine();
 
+
+            status = false;
+        }
 
     }
 
