@@ -1,6 +1,4 @@
 package Album;
-
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -8,17 +6,14 @@ import java.awt.image.BufferedImage;
 
 public class ShowPhoto extends JPanel {
     BufferedImage image;
-
     public ShowPhoto(){
         setSize(600,400);
         setVisible(true);
 
     }
-
     public void loadImage(BufferedImage photo){
         image = photo;
     }
-
     public void paintComponent(Graphics graphics){
         super.paintComponent(graphics);
         graphics.drawImage(image, 0, 0, 600, 400, this);
@@ -35,8 +30,6 @@ public class ShowPhoto extends JPanel {
                 /*
                 Set timer for change photos
                 updateUI();
-
-
             }
         });
     }*/
