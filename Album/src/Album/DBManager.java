@@ -3,6 +3,7 @@ package Album;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.awt.image.BufferedImage;
 import java.util.Scanner;
@@ -54,7 +55,7 @@ public class DBManager {
             //Fazer teste se existem 5 fotos dessa categoria
             if (categoryTam < 5) {
                 loadImage.loadImage(loadImage.OpenFileViaExplorer());
-                String query = String.format("insert into %s(category, filedata) values('%s', '%s');", table_name, category);
+                String query = String.format("insert into %s(category, filedata) values('%s', '%s');", table_name, category, Arrays.toString(loadImage.imageBytes));
                 statement = connection.createStatement();
                 statement.executeUpdate(query);
                 //loadImage.OpenFileViaExplorer();

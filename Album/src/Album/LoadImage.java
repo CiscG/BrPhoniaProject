@@ -23,13 +23,19 @@ public class LoadImage {
             if(result == JFileChooser.APPROVE_OPTION){
                 File selectedFile = new File(fileChooser.getSelectedFile().getAbsolutePath());
                 System.out.println("Filepath" + selectedFile);
-                if(selectedFile.length()/1048576 <= 300){
+                String fileName = selectedFile.getName();
+                String extension = "";
+                int i = fileName.lastIndexOf(".");
+                if(i >= 0){
+                    extension = fileName.substring(i+1);
+                }
+                if(selectedFile.length()/1048576 <= 300 || extension.equals("png") || extension.equals("jpg")){
                     if(!Desktop.isDesktopSupported()){
                         System.out.println("Not Supported");
                         return null;
                     }else{
                         Desktop desktop = Desktop.getDesktop();
-                        desktop.open(selectedFile);
+                        //desktop.open(selectedFile);
                         return selectedFile;
                     }
                 }

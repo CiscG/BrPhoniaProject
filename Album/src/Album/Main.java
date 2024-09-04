@@ -74,7 +74,7 @@ public class Main {
                     db.deleteRowByCategory(connection, nameUser, db.categoryName);
                     break;
                 case "4":
-                    showPhoto.loadImage(db.category);
+                    showPhoto.loadImageSlide(db.category);
                     break;
                 case "5":
                     db.category.sort(Comparator.comparing(Categories::getId));

@@ -36,7 +36,7 @@ public class ShowPhoto extends JPanel {
         setVisible(true);
 
     }
-    public void loadImage(List<Categories> category){
+    public void loadImageSlide(List<Categories> category){
         this.categories = category;
         list = this.categories.listIterator();
         ImageIcon icon = new ImageIcon(categories.getFirst().photo);
