@@ -1,12 +1,10 @@
 package Album;
 
-import javax.swing.*;
 import java.util.*;
 import java.awt.image.BufferedImage;
 import java.sql.Connection;
 
 public class Main {
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Categories category;
@@ -20,13 +18,17 @@ public class Main {
         nameUser = scanner.nextLine();
         //Acessa ao banco de dados e verificação do usuario, o ideal seria ter feito apenas uma table para todos eles e feito uma divisão melhor para otimizar espaço
         Connection connection = db.connectionToDB("AlbumDB","postgres","123456");
-        db.readData(connection,nameUser);
-
-        System.out.println("Deseja escolher ou criar uma categoria?");
-        test = scanner.nextLine();
-        if(Objects.equals(test, "criar"))
+        db.readData(connection, nameUser);
+        status = db.status;
+        test = "";
+        if(status){
+            System.out.println("Deseja escolher ou criar uma categoria?");
+            test = scanner.nextLine();
+        }
+        if(Objects.equals(test, "criar") || Objects.equals(test, ""))
         {
             category = new Categories();
+            status = true;
             while(status) {
                 System.out.println("Digite o nome de sua categoria");
                 category.category = scanner.nextLine();
@@ -49,8 +51,15 @@ public class Main {
         }
         status = true;
         while(status){
-            System.out.println("Escolha a opção que deseja realizar \n1 - Adicionar foto \n2 - Remover foto" +
-                    "\n3 - Remover album \n4 - Slides de fotos \n5 - Ordenar Album \n6 - Sair do programa");
+            System.out.println("""
+                    Escolha a opção que deseja realizar\s
+                    1 - Adicionar foto\s
+                    2 - Remover foto\
+                    
+                    3 - Remover album\s
+                    4 - Slides de fotos\s
+                    5 - Ordenar Album\s
+                    6 - Sair do programa""");
             test = scanner.nextLine();
             switch (test){
                 case "1":
@@ -68,7 +77,7 @@ public class Main {
                     showPhoto.loadImage(db.category);
                     break;
                 case "5":
-                    Collections.sort(db.category, Comparator.comparing(Categories::getId));
+                    db.category.sort(Comparator.comparing(Categories::getId));
                     break;
                 case "6":
                     status = false;

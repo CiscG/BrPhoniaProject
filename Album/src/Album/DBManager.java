@@ -18,7 +18,7 @@ public class DBManager {
     Scanner scanner = new Scanner(System.in);
     boolean status = true;
     LoadImage loadImage = new LoadImage();
-    public List<Categories> category = new ArrayList<Categories>();
+    public List<Categories> category = new ArrayList<>();
     public Connection connectionToDB(String dbname, String user, String pwrd) {
         Connection connection = null;
         try{
@@ -36,12 +36,15 @@ public class DBManager {
     }
     public void createTable(Connection connection, String table_name){
         Statement statement;
+        this.status = false;
         try {
-            String query = "create Table " + table_name + "(ID SERIAL, category varchar(200),filedata bytea(), primary key(ID));";
+            String query = "create table " + table_name + "(ID SERIAL, category varchar(200), filedata bytea, primary key(ID));";
+            //String query = "create Table " + table_name + "(ID SERIAL, category varchar(200), primary key(ID));";
             statement = connection.createStatement();
             statement.executeUpdate(query);
             System.out.println("Table Created");
         } catch (Exception e) {
+            System.out.println("Deu erro");
             System.out.println(e);
         }
     }
@@ -81,6 +84,7 @@ public class DBManager {
             }
         } catch (Exception e) {
             System.out.println(e);
+            System.out.println(connection + " " + table_name);
             this.createTable(connection, table_name);
         }
     }
@@ -96,11 +100,11 @@ public class DBManager {
         }
     }
     public boolean searchByCategory(Connection connection, String table_name, String nameCategory){
-        Categories cat = new Categories();
+        Categories cat;
         Statement statement;
         ResultSet rs;
         this.categoryName = nameCategory;
-        this.category = new ArrayList<Categories>();
+        this.category = new ArrayList<>();
         try {
             String query  = String.format("select * from %s where category = '%s'", table_name, nameCategory);
             statement = connection.createStatement();
@@ -117,8 +121,7 @@ public class DBManager {
         } catch (Exception e) {
             System.out.println("Categoria não encontrada \nDeseja continuar? \n1 - Sim \n2 - Não");
             int test = Integer.parseInt(scanner.nextLine());
-            if(test != 1)
-            {
+            if (test != 1) {
                 return true;
             }
             else{
@@ -130,12 +133,13 @@ public class DBManager {
         Statement statement;
         ResultSet rs;
         this.categoryName = nameCategory;
-        this.category = new ArrayList<Categories>();
+        this.category = new ArrayList<>();
         try {
             String query  = String.format("select * from %s where category = '%s'", table_name, nameCategory);
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
             System.out.println("Categoria já existente");
+            //System.out.println(rs.findColumn("category"));
             return false;
         } catch (Exception e) {
             return true;
