@@ -55,7 +55,7 @@ public class DBManager {
             //Fazer teste se existem 5 fotos dessa categoria
             if (categoryTam < 5) {
                 photo = loadImage.loadImage(LoadImage.OpenFileViaExplorer());
-                String query = String.format("insert into %s(category, filedata) values('%s', '%s');", table_name, category, Arrays.toString(loadImage.imageBytes));
+                String query = String.format("insert into %s(category, filedata) values('%s', '%b');", table_name, category, loadImage.imageBytes);
                 statement = connection.createStatement();
                 statement.executeUpdate(query);
                 //loadImage.OpenFileViaExplorer();
@@ -81,7 +81,7 @@ public class DBManager {
             while (rs.next()){
                 System.out.print(rs.getString("ID")+" ");
                 System.out.print(rs.getString("category")+" ");
-                System.out.println(rs.getString("data")+" ");
+                System.out.println(rs.getString("filedata")+" ");
             }
         } catch (Exception e) {
             System.out.println(e);

@@ -33,7 +33,6 @@ public class ShowPhoto extends JPanel {
     public ShowPhoto(){
         setSize(600,400);
         setVisible(true);
-
     }
     public void loadImageSlide(List<Categories> category){
         this.categories = category;
