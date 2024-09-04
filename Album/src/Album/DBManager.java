@@ -131,13 +131,15 @@ public class DBManager {
     }
     public boolean searchByCategory2(Connection connection, String table_name, String nameCategory){
         Statement statement;
-        ResultSet rs;
+        ResultSet rs = null;
         this.categoryName = nameCategory;
         this.category = new ArrayList<>();
         try {
             String query  = String.format("select * from %s where category = '%s'", table_name, nameCategory);
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
+            System.out.println(rs.getString("category"));
+            System.out.println(rs.getString("ID"));
             System.out.println("Categoria já existente");
             //System.out.println(rs.findColumn("category"));
             return false;
