@@ -54,15 +54,15 @@ public class DBManager {
         try {
             //Fazer teste se existem 5 fotos dessa categoria
             if (categoryTam < 5) {
-                loadImage.loadImage(loadImage.OpenFileViaExplorer());
+                photo = loadImage.loadImage(LoadImage.OpenFileViaExplorer());
                 String query = String.format("insert into %s(category, filedata) values('%s', '%s');", table_name, category, Arrays.toString(loadImage.imageBytes));
                 statement = connection.createStatement();
                 statement.executeUpdate(query);
                 //loadImage.OpenFileViaExplorer();
-                photo = loadImage.loadImage(LoadImage.OpenFileViaExplorer());
                 //System.out.println(loadImage.OpenFileViaExplorer());
                 System.out.println("Inserted");
                 categoryTam++;
+                this.searchByCategory(connection,table_name,category);
             }else{
                 System.out.println("Categoria cheia");
             }
